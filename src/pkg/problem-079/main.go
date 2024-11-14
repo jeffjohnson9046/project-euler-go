@@ -1,38 +1,36 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"log"
-	"os"
 	"projecteuler/src/pkg/diagnostics"
+	"projecteuler/src/pkg/fileutils"
 	"strings"
 	"time"
 )
 
 // Read the provided file.
-func readFile(path string) ([]string, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-	defer func() {
-		if err := file.Close(); err != nil {
-			log.Fatalf("Error reading file %s: %v", path, err)
-		}
-	}()
+// func readFile(path string) ([]string, error) {
+// 	file, err := os.Open(path)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 		return nil, err
+// 	}
+// 	defer func() {
+// 		if err := file.Close(); err != nil {
+// 			log.Fatalf("Error reading file %s: %v", path, err)
+// 		}
+// 	}()
 
-	fileScanner := bufio.NewScanner(file)
-	fileScanner.Split(bufio.ScanLines)
+// 	fileScanner := bufio.NewScanner(file)
+// 	fileScanner.Split(bufio.ScanLines)
 
-	var fileLines []string
-	for fileScanner.Scan() {
-		fileLines = append(fileLines, fileScanner.Text())
-	}
+// 	var fileLines []string
+// 	for fileScanner.Scan() {
+// 		fileLines = append(fileLines, fileScanner.Text())
+// 	}
 
-	return fileLines, nil
-}
+// 	return fileLines, nil
+// }
 
 // Sort the graph of digits
 func topologicalSort(graph map[rune][]rune) string {
@@ -82,8 +80,8 @@ func topologicalSort(graph map[rune][]rune) string {
 func main() {
 	defer diagnostics.LogElapsedTime(time.Now(), "problem-079")
 
-	path := "src/pkg/problem-079/resources/login-attempts.txt"
-	loginAttempts, err := readFile(path)
+	path := "./resources/login-attempts.txt"
+	loginAttempts, err := fileutils.ReadFile(path)
 	if err != nil {
 		fmt.Printf("Error attempting to read login attempst file %s: %v", path, err)
 	}
