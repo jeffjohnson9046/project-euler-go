@@ -2,10 +2,8 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"projecteuler/src/pkg/diagnostics"
 	"projecteuler/src/pkg/fileutils"
-	"strconv"
 	"strings"
 	"time"
 )
@@ -20,11 +18,7 @@ func createBoard(input []string) ([9][9]int, error) {
 
 		row := [9]int{}
 		for j, digit := range line {
-			digitAsInt, err := strconv.Atoi(string(digit))
-			if err != nil {
-				log.Fatal(err)
-				return board, err
-			}
+			digitAsInt := int(digit - '0')
 
 			row[j] = digitAsInt
 		}
