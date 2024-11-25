@@ -1,4 +1,4 @@
-package puzzle
+package sudoku
 
 type IntSet []int
 
