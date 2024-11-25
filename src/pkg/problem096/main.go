@@ -33,5 +33,5 @@ func main() {
 		}
 	}
 
-	fmt.Printf("Sum of first three digits from 50 puzzles is: %d\n", sum)
+	fmt.Printf("Sum of the 'checksum' digits from 50 puzzles is: %d\n", sum)
 }
