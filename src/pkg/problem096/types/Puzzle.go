@@ -1,14 +1,16 @@
 package types
 
 import (
+	"bytes"
 	"fmt"
+	"strconv"
 	"strings"
 )
 
 type Puzzle struct {
-	Name          string
-	Grid          [81]int
-	FirstThreeSum int
+	Name       string
+	Grid       [81]int
+	TopLeftInt int
 }
 
 func NewPuzzle(name string, input []string) Puzzle {
@@ -44,6 +46,21 @@ func (p Puzzle) GetFirstEmptyCell() int {
 	}
 
 	return -1
+}
+
+func (p Puzzle) GetIntFromArrayOfInts(nums []int) (int, error) {
+	var buf bytes.Buffer
+
+	for i := range nums {
+		buf.WriteString(fmt.Sprintf("%d", nums[i]))
+	}
+
+	result, err := strconv.Atoi(buf.String())
+	if err != nil {
+		return -1, err
+	}
+
+	return result, nil
 }
 
 func (p Puzzle) GetNeighbors(row int, col int) IntSet {
@@ -105,9 +122,15 @@ func (p Puzzle) Solve() (Puzzle, error) {
 	// try each candidate
 	for _, v := range candidates {
 		result, err := p.WithElementAt(row, col, v).Solve()
+
+		// if the puzzle is solved, then get the first three elements in the grid and combine them into a single int.
+		// For the example, the first three elements are [4, 8, 3] so the resutling int should be 483.
 		if err == nil {
-			result.FirstThreeSum = result.Grid[0] + result.Grid[1] + result.Grid[2]
-			return result, nil
+			topLeftInt, err := result.GetIntFromArrayOfInts(result.Grid[:3])
+			if err == nil {
+				result.TopLeftInt = topLeftInt
+				return result, nil
+			}
 		}
 	}
 
@@ -117,7 +140,7 @@ func (p Puzzle) Solve() (Puzzle, error) {
 func (p Puzzle) ToString() string {
 	var sb strings.Builder
 
-	fmt.Fprintf(&sb, "%s first three sum: %d\n", p.Name, p.FirstThreeSum)
+	fmt.Fprintf(&sb, "%s digit: %d\n", p.Name, p.TopLeftInt)
 	sb.WriteString("|-------+-------+-------|\n")
 
 	for r := 0; r < 9; r++ {
