@@ -118,16 +118,16 @@ func (p Puzzle) ToString() string {
 	var sb strings.Builder
 
 	fmt.Fprintf(&sb, "%s first three sum: %d\n", p.Name, p.FirstThreeSum)
-	sb.WriteString("------+-------+------\n")
+	sb.WriteString("|-------+-------+-------|\n")
 
 	for r := 0; r < 9; r++ {
-		fmt.Fprintf(&sb, "%d %d %d | %d %d %d | %d %d %d\n",
+		fmt.Fprintf(&sb, "| %d %d %d | %d %d %d | %d %d %d |\n",
 			p.ElementAt(r, 0), p.ElementAt(r, 1), p.ElementAt(r, 2),
 			p.ElementAt(r, 3), p.ElementAt(r, 4), p.ElementAt(r, 5),
 			p.ElementAt(r, 6), p.ElementAt(r, 7), p.ElementAt(r, 8))
 
 		if r == 2 || r == 5 || r == 8 {
-			sb.WriteString("------+-------+------\n")
+			sb.WriteString("|-------+-------+-------|\n")
 		}
 	}
 
