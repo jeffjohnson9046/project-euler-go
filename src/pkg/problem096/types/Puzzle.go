@@ -1,9 +1,8 @@
 package types
 
 import (
-	"bytes"
 	"fmt"
-	"strconv"
+	"projecteuler/src/pkg/arrayutils"
 	"strings"
 )
 
@@ -46,21 +45,6 @@ func (p Puzzle) GetFirstEmptyCell() int {
 	}
 
 	return -1
-}
-
-func (p Puzzle) GetIntFromArrayOfInts(nums []int) (int, error) {
-	var buf bytes.Buffer
-
-	for i := range nums {
-		buf.WriteString(fmt.Sprintf("%d", nums[i]))
-	}
-
-	result, err := strconv.Atoi(buf.String())
-	if err != nil {
-		return -1, err
-	}
-
-	return result, nil
 }
 
 func (p Puzzle) GetNeighbors(row int, col int) IntSet {
@@ -126,9 +110,9 @@ func (p Puzzle) Solve() (Puzzle, error) {
 		// if the puzzle is solved, then get the first three elements in the grid and combine them into a single int.
 		// For the example, the first three elements are [4, 8, 3] so the resutling int should be 483.
 		if err == nil {
-			topLeftInt, err := result.GetIntFromArrayOfInts(result.Grid[:3])
+			checksumDigit, err := arrayutils.ConvertIntSliceToInt(result.Grid[:3])
 			if err == nil {
-				result.ChecksumDigit = topLeftInt
+				result.ChecksumDigit = checksumDigit
 				return result, nil
 			}
 		}
