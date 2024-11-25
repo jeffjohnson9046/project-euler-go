@@ -1,4 +1,4 @@
-package types
+package puzzle
 
 type IntSet []int
 

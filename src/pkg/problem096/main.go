@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"projecteuler/src/pkg/diagnostics"
 	"projecteuler/src/pkg/fileutils"
-	"projecteuler/src/pkg/problem096/types"
+	"projecteuler/src/pkg/problem096/puzzle"
 	"time"
 )
 
@@ -24,7 +24,7 @@ func main() {
 
 		puzzleName := puzzleContent[0]
 		puzzleInput := puzzleContent[1:]
-		puzzle := types.NewPuzzle(puzzleName, puzzleInput)
+		puzzle := puzzle.NewPuzzle(puzzleName, puzzleInput)
 
 		solvedPuzzle, err := puzzle.Solve()
 		if err == nil {
