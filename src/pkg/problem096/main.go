@@ -11,22 +11,27 @@ import (
 func main() {
 	defer diagnostics.LogElapsedTime(time.Now(), "problem-096")
 
-	pathToFile := "./resources/single-puzzle.txt"
+	pathToFile := "./resources/p096_sudoku.txt"
 
 	fileContent, err := fileutils.ReadFile(pathToFile)
 	if err != nil {
 		fmt.Printf("Error attempting to read file %s: %v\n", pathToFile, err)
 	}
 
-	puzzleName := fileContent[:1]
-	puzzleInput := fileContent[1:]
+	sum := 0
+	for i := 0; i < len(fileContent); i += 10 {
+		puzzleContent := fileContent[i : i+10]
 
-	testPuzzle := types.NewPuzzle(puzzleName[0], puzzleInput)
+		puzzleName := puzzleContent[0]
+		puzzleInput := puzzleContent[1:]
+		puzzle := types.NewPuzzle(puzzleName, puzzleInput)
 
-	fmt.Println(testPuzzle.ToString())
-
-	solvedPuzzle, err := testPuzzle.Solve()
-	if err == nil {
-		fmt.Println(solvedPuzzle.ToString())
+		solvedPuzzle, err := puzzle.Solve()
+		if err == nil {
+			fmt.Println(solvedPuzzle.ToString())
+			sum += solvedPuzzle.FirstThreeSum
+		}
 	}
+
+	fmt.Printf("Sum of first three digits from 50 puzzles is: %d\n", sum)
 }

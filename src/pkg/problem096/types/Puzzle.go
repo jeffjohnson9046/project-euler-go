@@ -6,9 +6,9 @@ import (
 )
 
 type Puzzle struct {
-	Name       string
-	Grid       [81]int
-	TopLeftSum int
+	Name          string
+	Grid          [81]int
+	FirstThreeSum int
 }
 
 func NewPuzzle(name string, input []string) Puzzle {
@@ -68,7 +68,7 @@ func (p Puzzle) GetNeighbors(row int, col int) IntSet {
 	topLeftColumn := (col / 3) * 3
 
 	// Neighboring 3x3 grid
-	for r := topLeftRow; r < topLeftRow; r++ {
+	for r := topLeftRow; r < topLeftRow+3; r++ {
 		for c := topLeftColumn; c < topLeftColumn+3; c++ {
 			if value := p.ElementAt(r, c); value != 0 {
 				neighbors.Add(value)
@@ -106,7 +106,7 @@ func (p Puzzle) Solve() (Puzzle, error) {
 	for _, v := range candidates {
 		result, err := p.WithElementAt(row, col, v).Solve()
 		if err == nil {
-			result.TopLeftSum = result.Grid[0] + result.Grid[1] + result.Grid[2]
+			result.FirstThreeSum = result.Grid[0] + result.Grid[1] + result.Grid[2]
 			return result, nil
 		}
 	}
@@ -117,7 +117,7 @@ func (p Puzzle) Solve() (Puzzle, error) {
 func (p Puzzle) ToString() string {
 	var sb strings.Builder
 
-	fmt.Fprintf(&sb, "%s top-left sum: %d\n", p.Name, p.TopLeftSum)
+	fmt.Fprintf(&sb, "%s first three sum: %d\n", p.Name, p.FirstThreeSum)
 	sb.WriteString("------+-------+------\n")
 
 	for r := 0; r < 9; r++ {
@@ -126,7 +126,7 @@ func (p Puzzle) ToString() string {
 			p.ElementAt(r, 3), p.ElementAt(r, 4), p.ElementAt(r, 5),
 			p.ElementAt(r, 6), p.ElementAt(r, 7), p.ElementAt(r, 8))
 
-		if r == 2 || r == 5 {
+		if r == 2 || r == 5 || r == 8 {
 			sb.WriteString("------+-------+------\n")
 		}
 	}
