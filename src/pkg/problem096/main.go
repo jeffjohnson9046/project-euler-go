@@ -29,7 +29,7 @@ func main() {
 		solvedPuzzle, err := puzzle.Solve()
 		if err == nil {
 			fmt.Println(solvedPuzzle.ToString())
-			sum += solvedPuzzle.TopLeftInt
+			sum += solvedPuzzle.ChecksumDigit
 		}
 	}
 

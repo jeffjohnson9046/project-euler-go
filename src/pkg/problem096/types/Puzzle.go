@@ -8,9 +8,9 @@ import (
 )
 
 type Puzzle struct {
-	Name       string
-	Grid       [81]int
-	TopLeftInt int
+	Name          string
+	Grid          [81]int
+	ChecksumDigit int
 }
 
 func NewPuzzle(name string, input []string) Puzzle {
@@ -128,7 +128,7 @@ func (p Puzzle) Solve() (Puzzle, error) {
 		if err == nil {
 			topLeftInt, err := result.GetIntFromArrayOfInts(result.Grid[:3])
 			if err == nil {
-				result.TopLeftInt = topLeftInt
+				result.ChecksumDigit = topLeftInt
 				return result, nil
 			}
 		}
@@ -140,7 +140,7 @@ func (p Puzzle) Solve() (Puzzle, error) {
 func (p Puzzle) ToString() string {
 	var sb strings.Builder
 
-	fmt.Fprintf(&sb, "%s digit: %d\n", p.Name, p.TopLeftInt)
+	fmt.Fprintf(&sb, "%s digit: %d\n", p.Name, p.ChecksumDigit)
 	sb.WriteString("|-------+-------+-------|\n")
 
 	for r := 0; r < 9; r++ {
