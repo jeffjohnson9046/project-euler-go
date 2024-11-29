@@ -140,3 +140,11 @@ func (p Puzzle) ToString() string {
 
 	return sb.String()
 }
+
+func (p Puzzle) ToSummary() string {
+	var sb strings.Builder
+
+	fmt.Fprintf(&sb, "%s digit: %d\n", p.Name, p.ChecksumDigit)
+
+	return sb.String()
+}
