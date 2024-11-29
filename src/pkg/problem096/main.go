@@ -24,14 +24,15 @@ func main() {
 
 	for i := 0; i < len(fileContent); i += 10 {
 		wg.Add(1)
+
 		go func() {
+			defer wg.Done()
+
 			puzzleContent := fileContent[i : i+10]
 
 			puzzleName := puzzleContent[0]
 			puzzleInput := puzzleContent[1:]
 			puzzle := sudoku.NewPuzzle(puzzleName, puzzleInput)
-
-			defer wg.Done()
 
 			solvedPuzzle, err := puzzle.Solve()
 
@@ -41,7 +42,6 @@ func main() {
 			} else {
 				fmt.Println("Error: ", err)
 			}
-
 		}()
 	}
 
