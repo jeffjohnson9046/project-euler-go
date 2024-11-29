@@ -23,26 +23,26 @@ func main() {
 	var wg sync.WaitGroup
 
 	for i := 0; i < len(fileContent); i += 10 {
-		puzzleContent := fileContent[i : i+10]
-
-		puzzleName := puzzleContent[0]
-		puzzleInput := puzzleContent[1:]
-		puzzle := sudoku.NewPuzzle(puzzleName, puzzleInput)
-
 		wg.Add(1)
-		go func(p sudoku.Puzzle) {
+		go func() {
+			puzzleContent := fileContent[i : i+10]
+
+			puzzleName := puzzleContent[0]
+			puzzleInput := puzzleContent[1:]
+			puzzle := sudoku.NewPuzzle(puzzleName, puzzleInput)
+
 			defer wg.Done()
 
-			solvedPuzzle, err := p.Solve()
+			solvedPuzzle, err := puzzle.Solve()
 
 			if err == nil {
-				fmt.Println(solvedPuzzle.ToString())
+				fmt.Println(solvedPuzzle.ToSummary())
 				sum += solvedPuzzle.ChecksumDigit
 			} else {
 				fmt.Println("Error: ", err)
 			}
 
-		}(puzzle)
+		}()
 	}
 
 	wg.Wait()
