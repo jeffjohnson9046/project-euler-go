@@ -124,7 +124,7 @@ func (p Puzzle) Solve() (Puzzle, error) {
 func (p Puzzle) ToString() string {
 	var sb strings.Builder
 
-	fmt.Fprintf(&sb, "%s digit: %d\n", p.Name, p.ChecksumDigit)
+	fmt.Fprintf(&sb, p.ToSummary())
 	sb.WriteString("|-------+-------+-------|\n")
 
 	for r := 0; r < 9; r++ {

@@ -5,6 +5,7 @@ import (
 	"projecteuler/src/pkg/diagnostics"
 	"projecteuler/src/pkg/fileutils"
 	"projecteuler/src/pkg/problem096/sudoku"
+	"sync"
 	"time"
 )
 
@@ -19,7 +20,7 @@ func main() {
 	}
 
 	sum := 0
-	var wg diagnostics.WaitGroupCount
+	var wg sync.WaitGroup
 
 	for i := 0; i < len(fileContent); i += 10 {
 		wg.Add(1)
@@ -34,12 +35,11 @@ func main() {
 			solvedPuzzle, err := puzzle.Solve()
 
 			if err == nil {
-				fmt.Println(solvedPuzzle.ToSummary())
+				fmt.Println(solvedPuzzle.ToString())
 				sum += solvedPuzzle.ChecksumDigit
 			} else {
 				fmt.Println("Error: ", err)
 			}
-
 		}(fileContent[i : i+10])
 	}
 
