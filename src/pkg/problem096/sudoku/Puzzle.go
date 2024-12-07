@@ -18,7 +18,7 @@ func NewPuzzle(name string, input []string) Puzzle {
 
 	for _, line := range input {
 		for _, digit := range line {
-			n := int(digit) - int('0')
+			n := int(digit - '0')
 			result.Grid[i] = n
 			i++
 		}
