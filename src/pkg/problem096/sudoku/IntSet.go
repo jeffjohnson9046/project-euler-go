@@ -1,15 +1,11 @@
 package sudoku
 
+import "slices"
+
 type IntSet []int
 
 func (set *IntSet) Contains(searchTerm int) bool {
-	for _, value := range *set {
-		if value == searchTerm {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(*set, searchTerm)
 }
 
 func (set *IntSet) Add(element int) {

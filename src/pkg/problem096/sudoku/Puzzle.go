@@ -51,14 +51,14 @@ func (p Puzzle) GetNeighbors(row int, col int) IntSet {
 	neighbors := IntSet{}
 
 	// Get the neigboring row
-	for c := 0; c < 9; c++ {
+	for c := range 9 {
 		if value := p.ElementAt(row, c); value != 0 {
 			neighbors.Add(value)
 		}
 	}
 
 	// Get the neigboring column
-	for r := 0; r < 9; r++ {
+	for r := range 9 {
 		if value := p.ElementAt(r, col); value != 0 {
 			neighbors.Add(value)
 		}
@@ -127,7 +127,7 @@ func (p Puzzle) ToString() string {
 	fmt.Fprintf(&sb, p.ToSummary())
 	sb.WriteString("|-------+-------+-------|\n")
 
-	for r := 0; r < 9; r++ {
+	for r := range 9 {
 		fmt.Fprintf(&sb, "| %d %d %d | %d %d %d | %d %d %d |\n",
 			p.ElementAt(r, 0), p.ElementAt(r, 1), p.ElementAt(r, 2),
 			p.ElementAt(r, 3), p.ElementAt(r, 4), p.ElementAt(r, 5),
